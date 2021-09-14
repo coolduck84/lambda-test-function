@@ -5,25 +5,22 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.pc.lambda.model.JsonRequest;
+import com.pc.lambda.model.LambdaDemoIO;
 
-public class Handler implements RequestHandler<JsonRequest, JsonRequest> {
+public class Handler implements RequestHandler<LambdaDemoIO, LambdaDemoIO> {
 
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-	public JsonRequest handleRequest(JsonRequest event, Context context) {
+	public LambdaDemoIO handleRequest(LambdaDemoIO event, Context context) {
 		
 		LambdaLogger logger = context.getLogger();
-
 		logger.log("event => " + gson.toJson(event) + "\n");
-		//logger.log("event.class => " + event.getClass().toString());
 		logger.log("context => " + gson.toJson(context) + "\n");
 		
-		JsonRequest response = new JsonRequest();
-		response.setEmpDetails(event.getEmpDetails());
+		LambdaDemoIO response = new LambdaDemoIO();
 		response.setFirstName(event.getFirstName());
 		response.setLastName(event.getLastName());
-		response.setProceedFurther(event.isProceedFurther());
+		response.setFuncStates(event.getFuncStates());
 		return response;
 	}
 }
